@@ -1,6 +1,6 @@
 //
 //  ImageProcessor.cpp
-//  FaceIt
+//  Ne10BoostedImageThresh
 //
 //  Created by Beau Johnston on 1/06/12.
 //  Copyright (c) 2012 OpenParallel.com all rights reserved.

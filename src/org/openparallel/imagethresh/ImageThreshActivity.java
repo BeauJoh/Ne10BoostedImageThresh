@@ -35,7 +35,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.hardware.Camera;
 
-@SuppressLint("ParserError")
+@SuppressLint({ "ParserError", "ParserError", "ParserError" })
 public class ImageThreshActivity extends Activity {
 	/** Called when the activity is first created. */
 
@@ -277,11 +277,12 @@ public class ImageThreshActivity extends Activity {
 					Bitmap photo;	
 					BitmapFactory.Options options = new BitmapFactory.Options();
 					options.inTempStorage = new byte[16*1024];
-					options.inSampleSize = 2;
+					options.inSampleSize = 4;
 
 					Cursor cursor = MediaStore.Images.Media.query(this.getContentResolver(), imageUri, null);
 
 					if( cursor != null && cursor.getCount() > 0 ) {
+						
 						cursor.moveToFirst();
 						String path = cursor.getString( cursor.getColumnIndex( MediaStore.Images.Thumbnails.DATA ) );
 
@@ -308,7 +309,8 @@ public class ImageThreshActivity extends Activity {
 						//							frontCameraPhotoWidth = 320;
 						//							
 						//back crappy from camera for the Samsung Galaxy S III
-						if(width == frontCameraPhotoWidth && height == frontCameraPhotoHeight){ //its the front faceing camera
+						int scalingFactor = options.inSampleSize/2;
+						if(width == frontCameraPhotoWidth/scalingFactor && height == frontCameraPhotoHeight/scalingFactor){ //its the front faceing camera
 							frontCamera = true;	
 						}
 						//							else if(width == backCameraPhotoWidth && height == backCameraPhotoHeight){
@@ -386,7 +388,45 @@ public class ImageThreshActivity extends Activity {
 						if(benchmarking){
 							//process the data
 							//this.doGrayscaleTransform();
+							
+							options = new BitmapFactory.Options();
+							
+							options.inTempStorage = new byte[16*1024];
+							options.inSampleSize = 4;
+							
+							Bitmap x = BitmapFactory.decodeResource(getResources(), R.raw.testtwo, options);
+									
+							//BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+				            //Bitmap x = bitmapDrawable.getBitmap();
+				            				            
+				            w = x.getWidth();
+							h = x.getHeight();
+							data = new int[w * h];
+							
+							x.getPixels(data, 0, w, 0, 0, w, h);
+							
+							
+							//int to byte array to bitmap
+							//x = Bitmap.createBitmap(data, w, h, Bitmap.Config.RGB_565); 
+//							
+//							
+							//imageView.setImageBitmap(x);
+////							
+							
+							
+							
+//							
+//				            //check that the image can be get and set and is identical
+//				            x.setPixels(data, 0, w, 0, 0, w, h);
+//				            
+//				            imageView.setImageBitmap(x);
+				            //Log.i("Captain's Log", "image get and set");
+							
+//				            if(true)
+//				            return;
+//							
 							float [] runtimes = new float[100];
+							
 							for (int i = 0; i < 100; i++){
 								this.setSourceImage(data, w, h);
 								float startnow = android.os.SystemClock.uptimeMillis();

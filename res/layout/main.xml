@@ -62,9 +62,10 @@
 	
 	<ImageView android:id="@+id/imageView1" 
 	    android:layout_height="390dp" 
-	    android:src="@raw/mainsplash" 
+	    android:src="@raw/mainsplash"
 	    android:layout_width="fill_parent"/>
-	
+	 <!-- android:src="@raw/mainsplash"  -->
+	 
 	<Button
 	android:id="@+id/save_button"
 	android:layout_width="fill_parent"
